@@ -9,3 +9,15 @@ install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 _deps
+.idea
+
+# CLion 自动生成的构建目录
+cmake-build-debug/
+cmake-build-release/
+
+# 忽略其他临时文件和编译结果
+*.o
+*.a
+*.so
+*.dll
+*.exe
