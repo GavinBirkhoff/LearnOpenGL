@@ -38,6 +38,7 @@ int main()
         return -1;
     }
     glfwMakeContextCurrent(window);
+    // We do have to tell GLFW we want to call this function on every window resize by registering it
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
     // glad: load all OpenGL function pointers
@@ -49,20 +50,27 @@ int main()
     }
 
     // 设置背景颜色
-//    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    // glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
     {
-        sleep(1);
-        // 清除颜色缓冲区
-//        glClear(GL_COLOR_BUFFER_BIT);
+
 
         // input
+        // -----
         processInput(window);
 
+        // render
+        // ------
         // 在这里进行渲染，或者执行其他操作
+
+        // sleep(1);
+        // 当您不清除颜色缓冲区时，前一帧的颜色数据可能会保留并影响渲染结果。在双缓冲环境下，前缓冲和后缓冲之间的颜色数据交替显示，可能会导致您观察到红色和黑色的交替。要获得可预测的渲染行为，通常应该在每一帧开始时调用glClear来清除颜色缓冲区，以确保背景色或其他所需的颜色正确设置。
+        // 我不明白为什么是红色和黑色交替，而不是其他颜色
+        // 清除颜色缓冲区
+        // glClear(GL_COLOR_BUFFER_BIT);
 
         // 更新背景颜色，让颜色渐变
         clearColorR += 0.01f;
@@ -79,8 +87,8 @@ int main()
         }
 
         // 设置新的清除颜色
-//        glClearColor(clearColorR, clearColorG, clearColorB, 1.0f);
-
+        // glClearColor(clearColorR, clearColorG, clearColorB, 1.0f);
+        // check and call events and swap the buffers
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // 交换前后缓冲区
         glfwSwapBuffers(window);
